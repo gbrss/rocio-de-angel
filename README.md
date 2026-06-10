@@ -1,4 +1,7 @@
 # Rocío de Ángel — Landing Page Premium
+![Alt text](https://github.com/gbrss/rocio-de-angel/blob/main/public/images/1.png?raw=true "Landing Page")
+![Alt text](https://github.com/gbrss/rocio-de-angel/blob/main/public/images/2.png?raw=true "Product Presentation")
+![Alt text](https://github.com/gbrss/rocio-de-angel/blob/main/public/images/3.png?raw=true "Printable")
 
 Landing page de alto rendimiento para **Rocío de Ángel · Loción Corporal Premium**, construida con Astro 5, TypeScript y Tailwind CSS 4. Diseño *mobile first*, celestial y sofisticado, optimizado para SEO, Core Web Vitals, accesibilidad WCAG AA y conversión.
 
