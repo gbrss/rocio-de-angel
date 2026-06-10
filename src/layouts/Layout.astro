@@ -1,0 +1,183 @@
+---
+import { SEO } from 'astro-seo';
+import { site } from '../data/content';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = site.title, description = site.description } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, site.url).toString();
+const ogImage = new URL(site.ogImage, site.url).toString();
+
+// ---- Schema.org: Product ----
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: `${site.name} — ${site.tagline}`,
+  image: [ogImage],
+  description: site.description,
+  brand: { '@type': 'Brand', name: site.name },
+  category: 'Cuidado corporal',
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '128',
+  },
+  offers: {
+    '@type': 'AggregateOffer',
+    priceCurrency: 'CLP',
+    lowPrice: '12990',
+    highPrice: '21990',
+    offerCount: '2',
+    availability: 'https://schema.org/InStock',
+  },
+};
+
+// ---- Schema.org: Organization ----
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  url: site.url,
+  logo: ogImage,
+  description: site.description,
+  email: site.email,
+  sameAs: [site.instagram, site.facebook],
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#FFF8F0" />
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+    />
+
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonical}
+      openGraph={{
+        basic: {
+          title: title,
+          type: 'website',
+          image: ogImage,
+          url: canonical,
+        },
+        optional: {
+          description: description,
+          siteName: site.name,
+          locale: site.locale,
+        },
+        image: {
+          alt: `${site.name} — ${site.tagline}`,
+          width: 1200,
+          height: 630,
+        },
+      }}
+      twitter={{
+        card: 'summary_large_image',
+        title: title,
+        description: description,
+        image: ogImage,
+        imageAlt: `${site.name} — ${site.tagline}`,
+      }}
+      extend={{
+        meta: [
+          { name: 'author', content: site.name },
+          { name: 'robots', content: 'index, follow' },
+        ],
+      }}
+    />
+
+    <!-- Datos estructurados -->
+    <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+
+    <!-- Habilita estados de animación solo con JS -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+
+  <body class="bg-cream text-ink antialiased">
+    <slot />
+
+    <!-- ============================================================
+         Motion One · animaciones globales
+         ============================================================ -->
+    <script>
+      import { animate, inView } from 'motion';
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!reduce) {
+        // Scroll reveal con stagger por contenedor
+        inView(
+          '[data-reveal]',
+          (element) => {
+            const delay = Number((element as HTMLElement).dataset.delay ?? 0);
+            animate(
+              element,
+              { opacity: [0, 1], transform: ['translateY(26px)', 'translateY(0px)'] },
+              { duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }
+            );
+            return () => {};
+          },
+          { margin: '0px 0px -12% 0px' }
+        );
+
+        // Botella flotante
+        const bottle = document.querySelector('[data-float]');
+        if (bottle) {
+          animate(
+            bottle,
+            { transform: ['translateY(0px)', 'translateY(-18px)'] },
+            { duration: 4, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }
+          );
+        }
+
+        // Parallax suave del fondo de partículas
+        const layers = document.querySelectorAll<HTMLElement>('[data-parallax]');
+        if (layers.length) {
+          let ticking = false;
+          window.addEventListener(
+            'scroll',
+            () => {
+              if (ticking) return;
+              ticking = true;
+              requestAnimationFrame(() => {
+                const y = window.scrollY;
+                layers.forEach((layer) => {
+                  const speed = Number(layer.dataset.parallax ?? 0.15);
+                  layer.style.transform = `translate3d(0, ${y * speed}px, 0)`;
+                });
+                ticking = false;
+              });
+            },
+            { passive: true }
+          );
+        }
+      }
+    </script>
+  </body>
+</html>

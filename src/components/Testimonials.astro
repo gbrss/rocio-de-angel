@@ -1,0 +1,75 @@
+---
+import { Star } from 'lucide-astro';
+import { testimonials } from '../data/content';
+
+const loop = [...testimonials.items, ...testimonials.items];
+---
+
+<section
+  id="testimonios"
+  class="relative overflow-hidden py-24 sm:py-32"
+  style="background: linear-gradient(180deg, var(--color-cream), var(--color-pink-light));"
+>
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <span class="eyebrow justify-center">{testimonials.eyebrow}</span>
+      <h2 class="mt-4 font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl">
+        {testimonials.title}
+      </h2>
+    </div>
+  </div>
+
+  <!-- Carrusel -->
+  <div
+    class="marquee-viewport relative mt-14 overflow-hidden"
+    data-reveal
+    aria-label="Testimonios de clientas"
+  >
+    <!-- Difuminados laterales -->
+    <div
+      class="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 sm:w-32"
+      style="background: linear-gradient(90deg, var(--color-cream), transparent);"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 sm:w-32"
+      style="background: linear-gradient(270deg, var(--color-pink-light), transparent);"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div class="marquee-track px-5">
+      {
+        loop.map((t, i) => (
+          <figure
+            class="glass w-[300px] shrink-0 rounded-[var(--radius-soft)] p-7 shadow-[var(--shadow-card)] sm:w-[360px]"
+            aria-hidden={i >= testimonials.items.length ? 'true' : undefined}
+          >
+            <div class="flex gap-1 text-gold" aria-label={`${t.rating} de 5 estrellas`}>
+              {Array.from({ length: t.rating }).map(() => (
+                <Star size={16} fill="currentColor" stroke-width={0} />
+              ))}
+            </div>
+            <blockquote class="mt-4 font-serif text-base italic leading-relaxed text-ink">
+              “{t.quote}”
+            </blockquote>
+            <figcaption class="mt-5 flex items-center gap-3">
+              <span
+                class="inline-flex h-10 w-10 items-center justify-center rounded-full font-display text-sm font-semibold text-gold"
+                style="background: linear-gradient(135deg, var(--color-gold-soft), var(--color-pink));"
+                aria-hidden="true"
+              >
+                {t.name.charAt(0)}
+              </span>
+              <span>
+                <span class="block text-sm font-semibold text-ink">{t.name}</span>
+                <span class="block text-xs text-ink-soft">{t.location}</span>
+              </span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>

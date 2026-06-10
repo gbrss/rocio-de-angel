@@ -1,0 +1,33 @@
+---
+import { ShoppingBag } from 'lucide-astro';
+import { cta } from '../data/content';
+---
+
+<section class="relative overflow-hidden py-24 sm:py-32">
+  <!-- Fondo luminoso -->
+  <div
+    class="absolute inset-0 -z-10"
+    style="background:
+      radial-gradient(80% 120% at 50% 0%, var(--color-gold-soft) 0%, transparent 45%),
+      linear-gradient(160deg, var(--color-pink-light), var(--color-sky-light));"
+  >
+  </div>
+  <div class="aura left-1/4 top-1/2 h-72 w-72" style="background: var(--color-pink); opacity:.5;"></div>
+  <div class="aura right-1/4 top-10 h-72 w-72" style="background: var(--color-sky); opacity:.5;"></div>
+
+  <div class="relative mx-auto max-w-3xl px-5 text-center sm:px-8" data-reveal>
+    <span class="eyebrow justify-center">{cta.eyebrow}</span>
+    <h2 class="mt-4 font-display text-4xl font-semibold leading-tight text-ink sm:text-6xl">
+      {cta.title}
+    </h2>
+    <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">
+      {cta.description}
+    </p>
+    <div class="mt-9 flex justify-center">
+      <a href={cta.button.href} class="btn btn-primary text-base">
+        <ShoppingBag size={20} aria-hidden="true" />
+        {cta.button.label}
+      </a>
+    </div>
+  </div>
+</section>

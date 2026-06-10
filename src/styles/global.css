@@ -1,0 +1,234 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+/* ============================================================
+   ROCÍO DE ÁNGEL · Design tokens (Tailwind 4 @theme)
+   Fuente única de verdad de la marca.
+   ============================================================ */
+@theme {
+  /* Paleta */
+  --color-gold: #d4af37;
+  --color-gold-soft: #e8d18a;
+  --color-pink: #f5c8d8;
+  --color-pink-light: #fdeef4;
+  --color-sky: #cdeaf7;
+  --color-sky-light: #eef8fd;
+  --color-cream: #fff8f0;
+  --color-ivory: #faf7f2;
+  --color-ink: #2a2a2a;
+  --color-ink-soft: #6b6b6b;
+
+  /* Tipografías */
+  --font-display: "Cinzel", ui-serif, Georgia, serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  /* Radios y sombras de marca */
+  --radius-soft: 1.25rem;
+  --shadow-glow: 0 24px 80px -20px rgba(212, 175, 55, 0.35);
+  --shadow-card: 0 18px 50px -24px rgba(42, 42, 42, 0.25);
+
+  /* Animaciones */
+  --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+:root {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+html {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background-color: var(--color-cream);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-gold-soft);
+  color: var(--color-ink);
+}
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Foco visible — accesibilidad WCAG */
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ============================================================
+   Componentes utilitarios de marca
+   ============================================================ */
+@utility glass {
+  background: color-mix(in srgb, white 55%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid color-mix(in srgb, white 70%, transparent);
+}
+
+@utility glass-tint {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-pink-light) 70%, transparent),
+    color-mix(in srgb, var(--color-sky-light) 70%, transparent)
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid color-mix(in srgb, white 60%, transparent);
+}
+
+/* Eyebrow / kicker con gota de rocío — elemento de firma */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  color: var(--color-gold);
+}
+.eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 11px;
+  background: linear-gradient(160deg, var(--color-gold-soft), var(--color-gold));
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  transform: rotate(0deg);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-gold) 50%, transparent);
+}
+
+/* Botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.95rem 1.8rem;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 0.4s var(--ease-silk), box-shadow 0.4s var(--ease-silk),
+    background 0.4s var(--ease-silk);
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+.btn-primary {
+  color: #3a2d00;
+  background: linear-gradient(135deg, var(--color-gold-soft), var(--color-gold));
+  box-shadow: var(--shadow-glow);
+}
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 28px 70px -18px rgba(212, 175, 55, 0.55);
+}
+.btn-ghost {
+  color: var(--color-ink);
+  background: color-mix(in srgb, white 50%, transparent);
+  border-color: color-mix(in srgb, var(--color-gold) 45%, transparent);
+  backdrop-filter: blur(10px);
+}
+.btn-ghost:hover {
+  transform: translateY(-3px);
+  background: color-mix(in srgb, white 80%, transparent);
+}
+
+/* Glow ambiental suave */
+.aura {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Línea divisoria dorada */
+.rule-gold {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--color-gold) 60%, transparent),
+    transparent
+  );
+}
+
+/* ============================================================
+   Animaciones
+   ============================================================ */
+
+/* Estado inicial de scroll reveal (solo si JS está activo) */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  will-change: opacity, transform;
+}
+
+/* Partículas doradas flotando (capa de fondo) */
+@keyframes drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(-2%, -3%, 0) scale(1.04); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+.particles-layer {
+  animation: drift 18s ease-in-out infinite;
+}
+
+/* Marquee testimonios */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1.5rem;
+  animation: marquee 48s linear infinite;
+}
+.marquee-viewport:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Brillo recorriendo el badge/CTA */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ============================================================
+   Reduced motion — respeto total
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .particles-layer,
+  .marquee-track { animation: none !important; }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

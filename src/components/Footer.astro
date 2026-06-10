@@ -1,0 +1,122 @@
+---
+import { Instagram, Facebook, MessageCircle, Send } from 'lucide-astro';
+import { footer, site } from '../data/content';
+
+const whatsappUrl = `https://wa.me/${site.whatsapp}`;
+const year = new Date().getFullYear();
+---
+
+<footer class="relative overflow-hidden bg-ink text-cream">
+  <div class="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
+      <!-- Marca + newsletter -->
+      <div class="lg:col-span-5">
+        <a href="#top" class="font-display text-2xl font-semibold tracking-[0.15em]">
+          {site.name.toUpperCase()}
+        </a>
+        <p class="mt-4 max-w-sm text-sm leading-relaxed text-cream/70">
+          {footer.description}
+        </p>
+
+        <div class="mt-8">
+          <h3 class="font-serif text-lg font-medium">{footer.newsletter.title}</h3>
+          <p class="mt-1 text-sm text-cream/70">{footer.newsletter.subtitle}</p>
+          <form
+            class="mt-4 flex max-w-md flex-col gap-3 sm:flex-row"
+            action="#"
+            method="post"
+          >
+            <label for="newsletter-email" class="sr-only">Correo electrónico</label>
+            <input
+              id="newsletter-email"
+              type="email"
+              name="email"
+              required
+              placeholder={footer.newsletter.placeholder}
+              autocomplete="email"
+              class="w-full rounded-full border border-cream/20 bg-cream/5 px-5 py-3 text-sm text-cream placeholder:text-cream/40 focus:border-gold focus:outline-none"
+            />
+            <button type="submit" class="btn btn-primary shrink-0 !py-3">
+              <Send size={16} aria-hidden="true" />
+              {footer.newsletter.button}
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Columnas de enlaces -->
+      {
+        footer.columns.map((col) => (
+          <nav class="lg:col-span-2" aria-label={col.title}>
+            <h3 class="text-sm font-semibold uppercase tracking-wider text-gold-soft">
+              {col.title}
+            </h3>
+            <ul class="mt-4 space-y-3" role="list">
+              {col.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="text-sm text-cream/70 transition-colors hover:text-cream"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+
+      <!-- Redes -->
+      <div class="lg:col-span-3">
+        <h3 class="text-sm font-semibold uppercase tracking-wider text-gold-soft">Síguenos</h3>
+        <div class="mt-4 flex gap-3">
+          <a
+            href={site.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram de Rocío de Ángel"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-cream/20 transition-all hover:border-gold hover:text-gold"
+          >
+            <Instagram size={20} aria-hidden="true" />
+          </a>
+          <a
+            href={site.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook de Rocío de Ángel"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-cream/20 transition-all hover:border-gold hover:text-gold"
+          >
+            <Facebook size={20} aria-hidden="true" />
+          </a>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Escríbenos por WhatsApp"
+            class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-cream/20 transition-all hover:border-gold hover:text-gold"
+          >
+            <MessageCircle size={20} aria-hidden="true" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="my-12 h-px w-full bg-cream/10"></div>
+
+    <div class="flex flex-col items-center justify-between gap-4 text-sm text-cream/60 sm:flex-row">
+      <p>© {year} {site.name}. Todos los derechos reservados.</p>
+      <ul class="flex flex-wrap items-center gap-x-6 gap-y-2" role="list">
+        {
+          footer.policies.map((p) => (
+            <li>
+              <a href={p.href} class="transition-colors hover:text-cream">
+                {p.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</footer>

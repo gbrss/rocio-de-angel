@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets';
+import { Check, ShoppingBag } from 'lucide-astro';
+import bottleImg from '../assets/rocio-angel-bottle.webp';
+import { productSizes } from '../data/content';
+
+const perks = ['Ingredientes naturales', 'Absorción rápida', 'Envío a todo Chile'];
+---
+
+<section id="presentaciones" class="relative overflow-hidden bg-ivory py-24 sm:py-32">
+  <div class="aura -left-20 top-1/4 h-80 w-80" style="background: var(--color-pink); opacity:.35;"></div>
+
+  <div class="relative mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <span class="eyebrow justify-center">{productSizes.eyebrow}</span>
+      <h2 class="mt-4 font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl">
+        {productSizes.title}
+      </h2>
+    </div>
+
+    <div class="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
+      {
+        productSizes.items.map((p, i) => (
+          <article
+            class:list={[
+              'group relative flex flex-col overflow-hidden rounded-[var(--radius-soft)] p-8 transition-all duration-500 ease-[var(--ease-silk)] hover:-translate-y-2',
+              p.featured
+                ? 'border-2 border-gold bg-cream shadow-[var(--shadow-glow)]'
+                : 'border border-gold-soft/40 bg-cream shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-glow)]',
+            ]}
+            data-reveal
+            data-delay={(i * 0.12).toFixed(2)}
+          >
+            {p.featured && (
+              <span class="absolute right-5 top-5 rounded-full bg-gold px-3 py-1 text-xs font-semibold tracking-wide text-[#3a2d00]">
+                Más vendido
+              </span>
+            )}
+
+            <div
+              class="mx-auto flex h-48 w-full items-center justify-center rounded-2xl"
+              style="background: linear-gradient(160deg, var(--color-pink-light), var(--color-sky-light));"
+            >
+              <Image
+                src={bottleImg}
+                alt={`Loción corporal Rocío de Ángel ${p.volume}`}
+                widths={[160, 240]}
+                sizes="160px"
+                loading="lazy"
+                class="h-40 w-auto drop-shadow-xl transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+
+            <div class="mt-6 flex items-baseline justify-between gap-3">
+              <h3 class="font-serif text-2xl font-medium text-ink">{p.name}</h3>
+              <span class="rounded-full border border-gold/40 px-3 py-1 font-display text-sm font-semibold text-gold">
+                {p.volume}
+              </span>
+            </div>
+
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">{p.description}</p>
+
+            <ul class="mt-5 space-y-2" role="list">
+              {perks.map((perk) => (
+                <li class="flex items-center gap-2 text-sm text-ink-soft">
+                  <Check size={16} class="text-gold" aria-hidden="true" />
+                  {perk}
+                </li>
+              ))}
+            </ul>
+
+            <div class="mt-7 flex items-center justify-between gap-4 border-t border-gold-soft/30 pt-6">
+              <span class="font-display text-3xl font-semibold text-ink">{p.price}</span>
+              <a
+                href={p.cta.href}
+                class:list={['btn', p.featured ? 'btn-primary' : 'btn-ghost']}
+              >
+                <ShoppingBag size={18} aria-hidden="true" />
+                {p.cta.label}
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

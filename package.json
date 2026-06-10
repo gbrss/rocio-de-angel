@@ -1,0 +1,24 @@
+{
+  "name": "rocio-de-angel",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Landing page premium para Rocío de Ángel — Loción Corporal Premium.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.7.0",
+    "astro-seo": "^0.8.4",
+    "lucide-astro": "^0.469.0",
+    "motion": "^12.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.8.0"
+  }
+}

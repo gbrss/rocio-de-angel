@@ -1,0 +1,139 @@
+---
+import { Image } from 'astro:assets';
+import { Sparkles, ShoppingBag, FlaskConical, ChevronDown } from 'lucide-astro';
+import bottleImg from '../assets/rocio-angel-bottle.webp';
+import { hero, site, nav } from '../data/content';
+---
+
+<header class="absolute inset-x-0 top-0 z-30">
+  <nav
+    class="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8"
+    aria-label="Navegación principal"
+  >
+    <a href="#top" class="font-display text-lg font-semibold tracking-[0.15em] text-ink">
+      {site.name.toUpperCase()}
+    </a>
+    <ul class="hidden items-center gap-8 lg:flex">
+      {
+        nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="text-sm font-medium text-ink-soft transition-colors hover:text-gold"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a href={hero.primaryCta.href} class="btn btn-primary !px-5 !py-2.5 text-sm">
+      <ShoppingBag size={16} aria-hidden="true" />
+      Comprar
+    </a>
+  </nav>
+</header>
+
+<section
+  id="top"
+  class="relative isolate flex min-h-[100svh] items-center overflow-hidden"
+>
+  <!-- Fondo: gradiente rosado + celeste -->
+  <div
+    class="absolute inset-0 -z-20"
+    style="background:
+      radial-gradient(120% 100% at 20% 0%, var(--color-pink-light) 0%, transparent 55%),
+      radial-gradient(120% 100% at 90% 20%, var(--color-sky-light) 0%, transparent 50%),
+      linear-gradient(160deg, var(--color-pink-light), var(--color-cream) 45%, var(--color-sky-light));"
+  >
+  </div>
+
+  <!-- Auras de glow -->
+  <div class="aura -left-24 top-10 h-80 w-80" style="background: var(--color-pink);"></div>
+  <div class="aura -right-20 top-1/3 h-96 w-96" style="background: var(--color-sky);"></div>
+  <div
+    class="aura bottom-0 left-1/3 h-72 w-72"
+    style="background: var(--color-gold-soft); opacity:.45;"
+  >
+  </div>
+
+  <!-- Partículas doradas animadas -->
+  <div
+    class="particles-layer pointer-events-none absolute inset-0 -z-10 bg-cover bg-center opacity-70 mix-blend-screen"
+    style={`background-image:url('/images/particles.webp')`}
+    data-parallax="0.12"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div
+    class="mx-auto grid w-full max-w-7xl items-center gap-10 px-5 pt-28 pb-16 sm:px-8 lg:grid-cols-2 lg:gap-6 lg:pt-20"
+  >
+    <!-- Texto -->
+    <div class="relative z-10 text-center lg:text-left" data-reveal>
+      <span class="eyebrow justify-center lg:justify-start">{hero.eyebrow}</span>
+
+      <h1
+        class="mt-5 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl xl:text-7xl"
+      >
+        {hero.title}
+      </h1>
+
+      <p class="mt-5 font-serif text-xl italic text-ink-soft sm:text-2xl">
+        {hero.subtitle}
+      </p>
+
+      <p class="mx-auto mt-5 max-w-md text-base leading-relaxed text-ink-soft lg:mx-0">
+        {hero.description}
+      </p>
+
+      <div class="mt-9 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
+        <a href={hero.primaryCta.href} class="btn btn-primary w-full sm:w-auto">
+          <ShoppingBag size={18} aria-hidden="true" />
+          {hero.primaryCta.label}
+        </a>
+        <a href={hero.secondaryCta.href} class="btn btn-ghost w-full sm:w-auto">
+          <FlaskConical size={18} aria-hidden="true" />
+          {hero.secondaryCta.label}
+        </a>
+      </div>
+
+      <div class="mt-8 flex items-center justify-center gap-2 text-sm text-ink-soft lg:justify-start">
+        <Sparkles size={16} class="text-gold" aria-hidden="true" />
+        <span>Certificación REC 2025 · Registro Sernatur · Hecho en Chile</span>
+      </div>
+    </div>
+
+    <!-- Botella flotante con glassmorphism -->
+    <div class="relative z-10 flex justify-center" data-reveal data-delay="0.15">
+      <div class="relative">
+        <div
+          class="glass absolute inset-0 -z-10 scale-110 rounded-[3rem]"
+          style="box-shadow: var(--shadow-glow);"
+          aria-hidden="true"
+        >
+        </div>
+        <div data-float class="px-6 py-4">
+          <Image
+            src={bottleImg}
+            alt="Envase de loción corporal premium Rocío de Ángel flotando con un brillo dorado suave"
+            widths={[280, 420, 560]}
+            sizes="(max-width: 768px) 70vw, 420px"
+            loading="eager"
+            fetchpriority="high"
+            class="mx-auto h-auto w-[260px] drop-shadow-2xl sm:w-[340px]"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Indicador de scroll -->
+  <a
+    href="#historia"
+    class="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-gold/70 transition-colors hover:text-gold"
+    aria-label="Desplázate para conocer más"
+  >
+    <ChevronDown size={28} aria-hidden="true" />
+  </a>
+</section>

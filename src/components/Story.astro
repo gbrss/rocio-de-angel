@@ -1,0 +1,45 @@
+---
+import { story } from '../data/content';
+import { Sparkles } from 'lucide-astro';
+---
+
+<section id="historia" class="relative overflow-hidden bg-cream py-24 sm:py-32">
+  <div class="aura -right-24 top-12 h-72 w-72" style="background: var(--color-pink); opacity:.4;">
+  </div>
+
+  <div class="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16">
+    <!-- Imagen floral -->
+    <div class="relative" data-reveal>
+      <div
+        class="aspect-[4/5] w-full overflow-hidden rounded-[var(--radius-soft)] bg-cover bg-center shadow-[var(--shadow-card)]"
+        style={`background-image:url('/images/floral-bg.webp')`}
+        role="img"
+        aria-label={story.imageAlt}
+      >
+      </div>
+      <!-- Tarjeta flotante de cita -->
+      <div
+        class="glass absolute -bottom-6 left-6 max-w-[15rem] rounded-2xl p-5 shadow-[var(--shadow-card)] sm:left-auto sm:-right-6"
+      >
+        <Sparkles size={20} class="text-gold" aria-hidden="true" />
+        <p class="mt-2 font-serif text-sm italic leading-relaxed text-ink">
+          {story.highlight}
+        </p>
+      </div>
+    </div>
+
+    <!-- Texto -->
+    <div data-reveal data-delay="0.1">
+      <span class="eyebrow">{story.eyebrow}</span>
+      <h2
+        class="mt-4 font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl"
+      >
+        {story.title}
+      </h2>
+      <div class="mt-6 space-y-5 text-base leading-relaxed text-ink-soft">
+        {story.paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+      <div class="rule-gold mt-8"></div>
+    </div>
+  </div>
+</section>

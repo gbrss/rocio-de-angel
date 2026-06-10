@@ -1,0 +1,46 @@
+---
+import Icon from './Icon.astro';
+import { ritual } from '../data/content';
+---
+
+<section id="ritual" class="relative overflow-hidden bg-ivory py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <span class="eyebrow justify-center">{ritual.eyebrow}</span>
+      <h2 class="mt-4 font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl">
+        {ritual.title}
+      </h2>
+    </div>
+
+    <ol class="relative mt-16 grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+      <!-- Línea conectora (solo desktop) -->
+      <div
+        class="rule-gold absolute left-0 right-0 top-7 hidden lg:block"
+        aria-hidden="true"
+      >
+      </div>
+
+      {
+        ritual.steps.map((s, i) => (
+          <li class="relative text-center" data-reveal data-delay={(i * 0.12).toFixed(2)}>
+            <div class="flex justify-center">
+              <span
+                class="relative z-10 inline-flex h-14 w-14 items-center justify-center rounded-full border border-gold/50 text-gold shadow-[var(--shadow-card)]"
+                style="background: linear-gradient(135deg, var(--color-pink-light), var(--color-sky-light));"
+              >
+                <Icon name={s.icon} size={24} strokeWidth={1.5} />
+              </span>
+            </div>
+            <span class="mt-5 block font-display text-sm font-semibold tracking-[0.3em] text-gold">
+              {s.step}
+            </span>
+            <h3 class="mt-1 font-serif text-xl font-medium text-ink">{s.title}</h3>
+            <p class="mx-auto mt-2 max-w-[16rem] text-sm leading-relaxed text-ink-soft">
+              {s.description}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

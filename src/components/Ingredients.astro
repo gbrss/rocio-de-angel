@@ -1,0 +1,45 @@
+---
+import Icon from './Icon.astro';
+import { ingredients } from '../data/content';
+---
+
+<section id="ingredientes" class="relative overflow-hidden bg-ivory py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-5 sm:px-8">
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <span class="eyebrow justify-center">{ingredients.eyebrow}</span>
+      <h2 class="mt-4 font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl">
+        {ingredients.title}
+      </h2>
+    </div>
+
+    <ul
+      class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      role="list"
+    >
+      {
+        ingredients.items.map((item, i) => (
+          <li
+            class="group relative overflow-hidden rounded-[var(--radius-soft)] border border-gold-soft/40 bg-cream p-7 shadow-[var(--shadow-card)] transition-all duration-500 ease-[var(--ease-silk)] hover:-translate-y-2 hover:border-gold/60 hover:shadow-[var(--shadow-glow)]"
+            data-reveal
+            data-delay={(i * 0.08).toFixed(2)}
+          >
+            {/* Glow al hover */}
+            <span
+              class="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-70"
+              style="background: var(--color-gold-soft);"
+              aria-hidden="true"
+            />
+            <span
+              class="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-gold/40 text-gold transition-transform duration-500 group-hover:scale-110"
+              style="background: linear-gradient(135deg, var(--color-pink-light), var(--color-sky-light));"
+            >
+              <Icon name={item.icon} size={26} strokeWidth={1.4} />
+            </span>
+            <h3 class="mt-5 font-serif text-xl font-medium text-ink">{item.name}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-soft">{item.description}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
